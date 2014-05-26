@@ -2,15 +2,19 @@ var Post = require("../models/post");
 module.exports = function(app) {
 
 	app.get('/messageboard', function(req, res){
-		console.log(req.session.userName)
+		console.log("messageboard")
+		console.log(req.session.userid)
+		id = req.session.userid
 		Post.find({}, function(err,post){
 			if (err) {
 				res.redirect('/')
 			}
 			else {
 				console.log(post)
+
 				res.render('messageboard', {
-					'messageboard' : post
+					'messageboard' : post,
+					'id' : id
 				})
 			}
 		})
@@ -37,15 +41,19 @@ module.exports = function(app) {
 				 		console.log("Deleted")
 				 		res.redirect("/messageboard")
 				 	}
-				}); 	
+				});
 			}
 		});
 	});
 
 	app.post("/post", function(req, res){
+
+		console.log(id)
 		var post = new Post({
 			title: req.body.title,
-			post: req.body.content});
+			post: req.body.content,
+			user: req.session.userid});
+
 		SavePost(post, res)
 	});
 

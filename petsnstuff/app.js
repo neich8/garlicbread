@@ -26,9 +26,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(methodOverride());
-app.use(cookieParser());
+app.use(cookieParser('S3CRE7'));
+app.use(expressSession());
 
-app.use(expressSession({secret:'somesecrettokenhere'}));
 
 
 app.use(require('less-middleware')(path.join(__dirname, 'public')));
@@ -76,3 +76,5 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+
